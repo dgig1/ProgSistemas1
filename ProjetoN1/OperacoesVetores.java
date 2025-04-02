@@ -1,9 +1,11 @@
+//Desenvolvido por Danilo Abude Gigliotti RA 10443431//
+
 import java.util.Scanner;
 import java.util.Random;
 
 public class OperacoesVetores {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner entrada = new Scanner(System.in);
         Random random = new Random();
         int[] vetor = null;
         int opcao;
@@ -20,7 +22,7 @@ public class OperacoesVetores {
             System.out.println("8. Verificar soma de dois números");
             System.out.println("9. Sair");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = entrada.nextInt();
 
             if (opcao != 1 && vetor == null) {
                 System.out.println("O vetor ainda não foi inicializado. Escolha a opção 1 primeiro.");
@@ -30,9 +32,9 @@ public class OperacoesVetores {
             switch (opcao) {
                 case 1:
                     System.out.print("Informe o tamanho do vetor: ");
-                    int n = scanner.nextInt();
+                    int n = entrada.nextInt();
                     System.out.print("Informe o valor máximo M: ");
-                    int m = scanner.nextInt();
+                    int m = entrada.nextInt();
                     vetor = new int[n];
                     for (int i = 0; i < n; i++) {
                         vetor[i] = random.nextInt(m + 1);
@@ -44,7 +46,7 @@ public class OperacoesVetores {
                     break;
                 case 3:
                     System.out.print("Informe um número para buscar no vetor: ");
-                    int valor = scanner.nextInt();
+                    int valor = entrada.nextInt();
                     int indice = buscarValor(vetor, valor);
                     if (indice != -1) {
                         System.out.println("Valor encontrado no índice: " + indice);
@@ -66,7 +68,7 @@ public class OperacoesVetores {
                     break;
                 case 8:
                     System.out.print("Informe um valor para verificar a soma de dois números: ");
-                    int somaValor = scanner.nextInt();
+                    int somaValor = entrada.nextInt();
                     System.out.println("Existe par de números que somam " + somaValor + "? " + verificaSoma(vetor, somaValor));
                     break;
                 case 9:
@@ -77,7 +79,7 @@ public class OperacoesVetores {
             }
         } while (opcao != 9);
 
-        scanner.close();
+        entrada.close();
     }
 
     public static void imprimirVetor(int[] vetor) {
