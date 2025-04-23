@@ -3,7 +3,9 @@
 import java.util.Scanner;
 import java.util.Random;
 
+
 public class OperacoesVetores {
+
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
         Random random = new Random();
@@ -35,53 +37,62 @@ public class OperacoesVetores {
                     int n = entrada.nextInt();
                     System.out.print("Informe o valor máximo M: ");
                     int m = entrada.nextInt();
-                    vetor = new int[n];
-                    for (int i = 0; i < n; i++) {
-                        vetor[i] = random.nextInt(m + 1);
-                    }
+                    vetor = inicializarVetor(n, m, random);
                     System.out.println("Vetor inicializado com sucesso!");
                     break;
+
                 case 2:
                     imprimirVetor(vetor);
                     break;
+
                 case 3:
                     System.out.print("Informe um número para buscar no vetor: ");
-                    int valor = entrada.nextInt();
-                    int indice = buscarValor(vetor, valor);
-                    if (indice != -1) {
-                        System.out.println("Valor encontrado no índice: " + indice);
-                    } else {
-                        System.out.println("Valor não encontrado no vetor.");
-                    }
+                    int valorBusca = entrada.nextInt();
+                    int indice = buscarValor(vetor, valorBusca);
+                    System.out.println((indice != -1) ? "Valor encontrado no índice: " + indice : "Valor não encontrado no vetor.");
                     break;
+
                 case 4:
                     System.out.println("Maior número no vetor: " + maiorNumero(vetor));
                     break;
+
                 case 5:
                     System.out.println("Média dos números pares: " + mediaPares(vetor));
                     break;
+
                 case 6:
                     System.out.println("Percentual de números ímpares: " + percentualImpares(vetor) + "%");
                     break;
+
                 case 7:
                     System.out.println("Média centralizada: " + mediaCentralizada(vetor));
                     break;
+
                 case 8:
                     System.out.print("Informe um valor para verificar a soma de dois números: ");
-                    int somaValor = entrada.nextInt();
-                    System.out.println("Existe par de números que somam " + somaValor + "? " + verificaSoma(vetor, somaValor));
+                    int valorSoma = entrada.nextInt();
+                    System.out.println("Existe par que soma " + valorSoma + "? " + verificaSoma(vetor, valorSoma));
                     break;
+
                 case 9:
                     System.out.println("Saindo...");
                     break;
+
                 default:
                     System.out.println("Opção inválida!");
+                    break;
             }
         } while (opcao != 9);
 
         entrada.close();
     }
-
+    public static int[] inicializarVetor(int tamanho, int max, Random random) {
+        int[] vetor = new int[tamanho];
+        for (int i = 0; i < tamanho; i++) {
+            vetor[i] = random.nextInt(max + 1);
+        }
+        return vetor;
+    }
     public static void imprimirVetor(int[] vetor) {
         System.out.print("Vetor: ");
         for (int num : vetor) {
@@ -89,7 +100,6 @@ public class OperacoesVetores {
         }
         System.out.println();
     }
-
     public static int buscarValor(int[] vetor, int valor) {
         for (int i = 0; i < vetor.length; i++) {
             if (vetor[i] == valor) {
@@ -98,7 +108,6 @@ public class OperacoesVetores {
         }
         return -1;
     }
-
     public static int maiorNumero(int[] vetor) {
         int maior = vetor[0];
         for (int num : vetor) {
@@ -108,38 +117,36 @@ public class OperacoesVetores {
         }
         return maior;
     }
-
     public static double mediaPares(int[] vetor) {
-        int soma = 0, count = 0;
+        int soma = 0, quantidade = 0;
         for (int num : vetor) {
             if (num % 2 == 0) {
                 soma += num;
-                count++;
+                quantidade++;
             }
         }
-        return count == 0 ? 0 : (double) soma / count;
+        return (quantidade == 0) ? 0 : (double) soma / quantidade;
     }
-
     public static double percentualImpares(int[] vetor) {
-        int count = 0;
+        int impares = 0;
         for (int num : vetor) {
             if (num % 2 != 0) {
-                count++;
+                impares++;
             }
         }
-        return ((double) count / vetor.length) * 100;
+        return (vetor.length == 0) ? 0 : ((double) impares / vetor.length) * 100;
     }
-
     public static double mediaCentralizada(int[] vetor) {
-        int maior = maiorNumero(vetor);
         int menor = vetor[0];
+        int maior = vetor[0];
         for (int num : vetor) {
-            if (num < menor) {
-                menor = num;
-            }
+            if (num < menor) menor = num;
+            if (num > maior) maior = num;
         }
+
         int soma = 0, count = 0;
         boolean menorRemovido = false, maiorRemovido = false;
+
         for (int num : vetor) {
             if (num == menor && !menorRemovido) {
                 menorRemovido = true;
@@ -152,9 +159,8 @@ public class OperacoesVetores {
             soma += num;
             count++;
         }
-        return count == 0 ? 0 : (double) soma / count;
+        return (count == 0) ? 0 : (double) soma / count;
     }
-
     public static boolean verificaSoma(int[] vetor, int valor) {
         for (int i = 0; i < vetor.length; i++) {
             for (int j = i + 1; j < vetor.length; j++) {
